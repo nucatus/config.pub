@@ -20,9 +20,9 @@ import java.util.Arrays;
 public class MongoConfiguration extends AbstractMongoConfiguration
 {
 
-    private static final String DB_NAME = "compagus";
+    private static final String DB_NAME = "configpubdb";
 
-    @Value("10.6.40.71:27017, 10.6.40.72:27017, 10.6.40.73:27017")
+    @Value("mngo1.int0.gf:27017, mngo2.int0.gf:27017, mngo3.int0.gf:27017")
     private ServerAddress[] serverAddresses;
 
     @Override
