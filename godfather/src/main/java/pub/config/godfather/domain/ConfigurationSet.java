@@ -1,5 +1,6 @@
 package pub.config.godfather.domain;
 
+import org.springframework.data.annotation.Id;
 import pub.config.godfather.dto.Configuration;
 
 import java.util.Set;
@@ -9,6 +10,12 @@ import java.util.Set;
  */
 public class ConfigurationSet implements DtoAware<Configuration>
 {
+
+    /**
+     * Object key
+     */
+    @Id
+    private String id;
 
     /**
      * This is the name of the configuration set which, in practice should match the
@@ -114,6 +121,16 @@ public class ConfigurationSet implements DtoAware<Configuration>
         this.environment = environment;
     }
 
+    public String getId()
+    {
+        return id;
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+
     @Override
     public Configuration toDto()
     {
@@ -122,3 +139,4 @@ public class ConfigurationSet implements DtoAware<Configuration>
         return configurationDto;
     }
 }
+//.
