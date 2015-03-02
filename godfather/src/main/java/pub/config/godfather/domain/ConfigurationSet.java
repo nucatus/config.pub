@@ -1,14 +1,16 @@
 package pub.config.godfather.domain;
 
 import org.springframework.data.annotation.Id;
-import pub.config.godfather.dto.Configuration;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 /**
  * Created by alexandru.ionita on 1/16/15.
  */
-public class ConfigurationSet implements DtoAware<Configuration>
+public class ConfigurationSet
 {
 
     /**
@@ -35,6 +37,7 @@ public class ConfigurationSet implements DtoAware<Configuration>
     /**
      * The version of the current configuration set
      */
+    @NotNull
     private Version configSetVersion;
     /**
      * The actual configuration entries
@@ -131,12 +134,5 @@ public class ConfigurationSet implements DtoAware<Configuration>
         this.id = id;
     }
 
-    @Override
-    public Configuration toDto()
-    {
-        Configuration configurationDto = new Configuration();
-        configurationDto.setName(this.name);
-        return configurationDto;
-    }
+
 }
-//.
