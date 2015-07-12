@@ -14,9 +14,10 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-version = '1.0'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+version = '0.1'
 
 repositories {
     mavenCentral()
@@ -29,6 +30,11 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.springframework.boot:spring-boot-starter-remote-shell")
+
+
+    compile("org.springframework:spring-webmvc:4.1.7.RELEASE")
+
+    compile("javax.ws.rs:javax.ws.rs-api:2.0.1")
 
     compile("org.mongodb:mongo-java-driver:2.12.4")
     testCompile("org.springframework.boot:spring-boot-starter-test")
