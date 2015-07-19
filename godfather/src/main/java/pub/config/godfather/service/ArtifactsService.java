@@ -26,18 +26,18 @@ public class ArtifactsService
 
     public Collection<Artifact> getArtifacts()
     {
-        return artifactDao.getArtifactsForOrganization(
+        return artifactDao.getAll(
                 SecurityHelper.getCurrentLoggedInUser().getOrganization().getId());
     }
 
     public boolean deleteArtifact(Artifact artifact)
     {
-        return artifactDao.deleteArtifactById(artifact.getId());
+        return artifactDao.deleteById(artifact.getId());
     }
 
     public Artifact getById(Long id)
     {
-        return artifactDao.getArtifactById(id);
+        return artifactDao.getById(id);
     }
 
     public boolean deleteArtifact(Long artifactId)
