@@ -20,7 +20,7 @@ public abstract class BasicService<M extends RootModel, T extends BasicDao<M, ? 
         this.dao = dao;
     }
 
-    public Collection<M> getArtifacts()
+    public Collection<M> getAll()
     {
         return dao.getAll(
                 SecurityHelper.getCurrentLoggedInUser().getOrganization().getId());
