@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pub.config.godfather.dao.artifact.ArtifactDao;
 import pub.config.godfather.model.Artifact;
+import pub.config.godfather.security.SecurityHelper;
 
 import java.util.Collection;
 
@@ -21,13 +22,13 @@ public class ArtifactsService
 
     public Artifact createArtifact(Artifact artifact)
     {
-        //  TODO: implement a call to retrieve the current user (caller).
-        return artifactDao.create(artifact, 1L);
+        return artifactDao.create(artifact, SecurityHelper.getCurrentLoggedInUser());
     }
 
     public Collection<Artifact> getArtifacts()
     {
-        return null;
+        return artifactDao.getArtifactsForOrganization(
+                SecurityHelper.getCurrentLoggedInUser().getOrganization().getId());
     }
 
     public boolean deleteArtifact(Artifact artifact)

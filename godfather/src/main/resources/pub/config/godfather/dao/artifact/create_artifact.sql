@@ -1,1 +1,1 @@
-insert into ARTIFACT (ID, NAME, CREATOR) values ((select nextval('glb_id')), :name, 1);
+insert into ARTIFACT (ID, NAME, CREATOR, ORGANIZATION) values ((select nextval('glb_id')), :name, :organization);

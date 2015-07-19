@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import pub.config.godfather.model.Artifact;
+import pub.config.godfather.model.User;
 
 import javax.sql.DataSource;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,13 +60,20 @@ public class ArtifactDao
         return rowsCount > 0;
     }
 
-    public Artifact create(Artifact artifact, Long creatorId)
+    public Artifact create(Artifact artifact, User creator)
     {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", artifact.getName());
-        parameters.put("creator", creatorId);
+        parameters.put("creator", creator.getId());
+        parameters.put("organization", creator.getOrganization().getId());
         jdbcTemplate.update(CREATE_ARTIFACT.getQuery(), parameters);
-        return getByNameAndCreator(artifact.getName(), creatorId);
+        return getByNameAndCreator(artifact.getName(), creator.getId());
     }
 
+    public Collection<Artifact> getArtifactsForOrganization(Long organizationId)
+    {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("organization", organizationId);
+        return jdbcTemplate.query(LIST_ARTIFACTS_IN_ORGANIZATION.getQuery(), parameters, new ArtifactRowMapper());
+    }
 }

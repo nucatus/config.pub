@@ -10,6 +10,7 @@ public enum ArtifactSql implements QueryFeeder
 {
     GET_ARTIFACT_BY_ID,
     GET_ARTIFACT_BY_NAME_AND_CREATOR,
+    LIST_ARTIFACTS_IN_ORGANIZATION,
     DELETE_ARTIFACT_BY_ID,
     CREATE_ARTIFACT;
 }
