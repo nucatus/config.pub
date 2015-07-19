@@ -1,7 +1,11 @@
 package pub.config.godfather.api.endpoints;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pub.config.godfather.api.util.ApiPageResult;
 import pub.config.godfather.model.Artifact;
 import pub.config.godfather.service.ArtifactsService;
@@ -31,31 +35,29 @@ public class Artifacts
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Response createArtifact(Artifact artifact)
+    public ResponseEntity<?> createArtifact(@RequestBody Artifact artifact)
     {
-        Artifact created = artifactsService.createArtifact(artifact);
-        if (created != null && created.getId() != null)
-        {
-            //  TODO: check the utility of the UriBuilder construction
-            URI createdId = UriBuilder.fromResource(Artifact.class).build(null);
-            return Response.created(createdId).build();
-        }
-        throw new InternalServerErrorException("Entity couldn't be created");
+        Artifact created = artifactsService.create(artifact);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(created.getId()).toUri());
+        return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{artifactId: \\d+}", method = RequestMethod.DELETE)
-    public Response deleteArtifact(@PathParam("artifactId") final long artifactId)
+    @RequestMapping(value = "/{artifactId:\\d+}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteArtifact(@PathVariable("artifactId") final long artifactId)
     {
-        boolean deleted = artifactsService.deleteArtifact(artifactId);
+        boolean deleted = artifactsService.delete(artifactId);
         if (deleted)
         {
-            return Response.accepted().build();
+            return new ResponseEntity<>(null, null, HttpStatus.ACCEPTED);
         }
         throw new InternalServerErrorException("Entity couldn't be deleted");
     }
 
-    @RequestMapping(value = "/{artifactId: \\d+}", method = RequestMethod.GET)
-    public Artifact getArtifactById(@PathParam("artifactId") final long artifactId)
+    @RequestMapping(value = "/{artifactId:\\d+}", method = RequestMethod.GET)
+    public Artifact getArtifactById(@PathVariable("artifactId") final long artifactId)
     {
         Artifact artifact = artifactsService.getById(artifactId);
         if (artifact == null)
