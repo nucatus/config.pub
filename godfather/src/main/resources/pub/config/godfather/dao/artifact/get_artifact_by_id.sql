@@ -1,0 +1,1 @@
+select ID, NAME from ARTIFACT where ID=:id

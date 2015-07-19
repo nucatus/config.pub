@@ -1,6 +1,8 @@
 package pub.config.godfather.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pub.config.godfather.dao.artifact.ArtifactDao;
 import pub.config.godfather.model.Artifact;
 
 import java.util.Collection;
@@ -13,9 +15,14 @@ import java.util.Collection;
 public class ArtifactsService
 {
 
+    @Autowired
+    ArtifactDao artifactDao;
+
+
     public Artifact createArtifact(Artifact artifact)
     {
-        return null;
+        //  TODO: implement a call to retrieve the current user (caller).
+        return artifactDao.create(artifact, 1L);
     }
 
     public Collection<Artifact> getArtifacts()
@@ -25,15 +32,15 @@ public class ArtifactsService
 
     public boolean deleteArtifact(Artifact artifact)
     {
-        return false;
+        return artifactDao.deleteArtifactById(artifact.getId());
     }
 
-    public Artifact getById(long id)
+    public Artifact getById(Long id)
     {
-        return null;
+        return artifactDao.getArtifactById(id);
     }
 
-    public boolean deleteArtifact(long artifactId)
+    public boolean deleteArtifact(Long artifactId)
     {
         Artifact artifact = getById(artifactId);
         return deleteArtifact(artifact);

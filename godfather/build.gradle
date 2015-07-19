@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.2.2.RELEASE'
+        springBootVersion = '1.2.4.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -33,13 +33,14 @@ dependencies {
 
 
     compile("org.springframework:spring-webmvc:4.1.7.RELEASE")
+    compile("org.springframework:spring-jdbc:4.1.7.RELEASE")
 
     compile("javax.ws.rs:javax.ws.rs-api:2.0.1")
 
-    compile("org.mongodb:mongo-java-driver:2.12.4")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-}
+    compile("mysql:mysql-connector-java:5.1.36")
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.12'
+    compile("org.mongodb:mongo-java-driver:2.12.4")
+
+    testCompile("org.testng:testng:6.9.6")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 }

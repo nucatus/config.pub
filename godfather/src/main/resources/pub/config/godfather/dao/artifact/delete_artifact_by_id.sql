@@ -1,0 +1,1 @@
+delete from ARTIFACT where ID=:id
