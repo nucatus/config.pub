@@ -19,7 +19,6 @@ public class ArtifactsService
     @Autowired
     ArtifactDao artifactDao;
 
-
     public Artifact createArtifact(Artifact artifact)
     {
         return artifactDao.create(artifact, SecurityHelper.getCurrentLoggedInUser());

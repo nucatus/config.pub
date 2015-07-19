@@ -19,7 +19,9 @@ public class SecurityHelper
         u.setFirstName("Alexandru");
         u.setLastName("Ionita");
         u.setEmail("alexandru.ionita@gmail.com");
-        u.setOrganization(new Organization("Igenox"));
+        Organization igenox = new Organization("Igenox");
+        igenox.setId(1L);
+        u.setOrganization(igenox);
         return u;
     }
 }

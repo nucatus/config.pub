@@ -1,10 +1,7 @@
 package pub.config.godfather.api.endpoints;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pub.config.godfather.api.util.ApiPageResult;
 import pub.config.godfather.model.Artifact;
 import pub.config.godfather.service.ArtifactsService;
@@ -27,13 +24,13 @@ public class Artifacts
     @Autowired
     ArtifactsService artifactsService;
 
-    @GET
+    @RequestMapping(method = RequestMethod.GET)
     public ApiPageResult<Artifact> getAllArtifacts()
     {
         return new ApiPageResult<>(artifactsService.getArtifacts());
     }
 
-    @POST
+    @RequestMapping(method = RequestMethod.POST)
     public Response createArtifact(Artifact artifact)
     {
         Artifact created = artifactsService.createArtifact(artifact);
@@ -46,9 +43,8 @@ public class Artifacts
         throw new InternalServerErrorException("Entity couldn't be created");
     }
 
-    @DELETE
-    @RequestMapping("/{artifactId:\\d+}")
-    public Response deleteArtifact(@PathVariable("artifactId") final long artifactId)
+    @RequestMapping(value = "/{artifactId: \\d+}", method = RequestMethod.DELETE)
+    public Response deleteArtifact(@PathParam("artifactId") final long artifactId)
     {
         boolean deleted = artifactsService.deleteArtifact(artifactId);
         if (deleted)
@@ -58,9 +54,8 @@ public class Artifacts
         throw new InternalServerErrorException("Entity couldn't be deleted");
     }
 
-    @GET
-    @RequestMapping("/{artifactId:\\d+}")
-    public Artifact getArtifactById(@PathVariable("artifactId") final long artifactId)
+    @RequestMapping(value = "/{artifactId: \\d+}", method = RequestMethod.GET)
+    public Artifact getArtifactById(@PathParam("artifactId") final long artifactId)
     {
         Artifact artifact = artifactsService.getById(artifactId);
         if (artifact == null)

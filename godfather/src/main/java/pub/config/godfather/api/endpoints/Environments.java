@@ -3,6 +3,7 @@ package pub.config.godfather.api.endpoints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pub.config.godfather.model.Environment;
 import pub.config.godfather.service.EnvironmentsService;
@@ -24,7 +25,7 @@ public class Environments
     @Autowired
     EnvironmentsService envService;
 
-    @POST
+    @RequestMapping(method = RequestMethod.POST)
     public Response createEnvironment(Environment environment,
                                       @PathVariable("artifactId") final long artifactId)
     {
@@ -38,8 +39,7 @@ public class Environments
         throw new InternalServerErrorException("Entity couldn't be created");
     }
 
-    @DELETE
-    @RequestMapping("/{environmentId:\\d+}")
+    @RequestMapping(value = "/{environmentId:\\d+}", method = RequestMethod.DELETE)
     public Response deleteArtifact(@PathVariable("environmentId") final long environmentId)
     {
         boolean deleted = envService.delete(environmentId);
@@ -50,8 +50,7 @@ public class Environments
         throw new InternalServerErrorException("Entity couldn't be deleted");
     }
 
-    @GET
-    @RequestMapping("/{environmentId:\\d+}")
+    @RequestMapping(value = "/{environmentId:\\d+}", method = RequestMethod.GET)
     public Environment getEnvironment(@PathVariable("environmentId") final long environmentId)
     {
         Environment environment = envService.getById(environmentId);
