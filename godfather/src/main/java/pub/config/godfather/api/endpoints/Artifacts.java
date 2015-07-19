@@ -37,7 +37,7 @@ public class Artifacts
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createArtifact(@RequestBody Artifact artifact)
     {
-        Artifact created = artifactsService.createArtifact(artifact);
+        Artifact created = artifactsService.create(artifact);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
@@ -48,7 +48,7 @@ public class Artifacts
     @RequestMapping(value = "/{artifactId:\\d+}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteArtifact(@PathVariable("artifactId") final long artifactId)
     {
-        boolean deleted = artifactsService.deleteArtifact(artifactId);
+        boolean deleted = artifactsService.delete(artifactId);
         if (deleted)
         {
             return new ResponseEntity<>(null, null, HttpStatus.ACCEPTED);

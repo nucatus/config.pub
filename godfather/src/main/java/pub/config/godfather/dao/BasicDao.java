@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import pub.config.godfather.dao.artifact.ArtifactRowMapper;
 import pub.config.godfather.model.Artifact;
 import pub.config.godfather.model.RootModel;
+import pub.config.godfather.model.User;
 
 import javax.sql.DataSource;
 import java.util.Collection;
@@ -17,7 +18,7 @@ import static pub.config.godfather.dao.artifact.ArtifactSql.*;
  * @author alexandru.ionita
  * @since 1.0
  */
-public class BasicDao<T extends RootModel, K extends CrudSqlInventory>
+public abstract class BasicDao<T extends RootModel, K extends CrudSqlInventory>
 {
     protected NamedParameterJdbcTemplate jdbcTemplate;
     protected RowMapper<T> defaultRawMapper;
@@ -45,6 +46,8 @@ public class BasicDao<T extends RootModel, K extends CrudSqlInventory>
         jdbcTemplate.update(crudSql.CREATE(), sqlParams);
         return getById(generatedId);
     }
+
+    public abstract T create(T artifact, User creator);
 
     public boolean deleteById(final Long id)
     {
