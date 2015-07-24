@@ -3,6 +3,7 @@ package pub.config.godfather.service;
 import pub.config.godfather.dao.BasicDao;
 import pub.config.godfather.dao.CrudSqlInventory;
 import pub.config.godfather.model.RootModel;
+import pub.config.godfather.model.User;
 import pub.config.godfather.security.SecurityHelper;
 
 import java.util.Collection;
@@ -29,11 +30,6 @@ public abstract class BasicService<M extends RootModel, T extends BasicDao<M, ? 
     public M getById(Long id)
     {
         return dao.getById(id);
-    }
-
-    public M create(M entity)
-    {
-        return dao.create(entity, SecurityHelper.getCurrentLoggedInUser());
     }
 
     public boolean delete(M entity)

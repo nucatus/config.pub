@@ -1,0 +1,10 @@
+select
+  ID,
+  NAME,
+  ARTIFACT,
+  CREATOR,
+  TYPE
+from
+  ENVIRONMENT
+where
+  ID=:id
