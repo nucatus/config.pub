@@ -28,13 +28,12 @@ public abstract class BasicEndpoint<M extends RootModel, T extends BasicService<
         this.service = service;
     }
 
-    public ResponseEntity<?> create(M entity)
+    protected ResponseEntity<?> decorateCreatedEntity(M entity)
     {
-        M created = service.create(entity);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(created.getId()).toUri());
+                .buildAndExpand(entity.getId()).toUri());
         return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
     }
 

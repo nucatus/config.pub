@@ -1,17 +1,11 @@
 package pub.config.godfather.api.endpoints;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import pub.config.godfather.api.util.ApiPageResult;
 import pub.config.godfather.model.Environment;
 import pub.config.godfather.service.EnvironmentsService;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import java.net.URI;
 
 /**
  * @author alexandru.ionita
@@ -19,45 +13,43 @@ import java.net.URI;
  */
 @RestController
 @RequestMapping("/api/artifacts/{artifactId:\\d+}/environments")
-public class Environments
+public class Environments extends BasicEndpoint<Environment, EnvironmentsService>
 {
 
     @Autowired
-    EnvironmentsService envService;
+    public Environments(EnvironmentsService service)
+    {
+        super(service);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ApiPageResult<Environment> getEnvironmentsForCurrentArtifact(
+            @PathVariable final Long artifactId)
+    {
+        return new ApiPageResult<>(service.getEnvironmentsForArtifact(artifactId));
+    }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Response createEnvironment(Environment environment,
-                                      @PathVariable("artifactId") final long artifactId)
+    public ResponseEntity<?> createEnvironment(
+            @RequestBody Environment environment,
+            @PathVariable final Long artifactId)
     {
-        Environment created = envService.createForArtifact(environment, artifactId);
-        if (created != null && created.getId() != null)
-        {
-            //  TODO: check the utility of the UriBuilder construction
-            URI createdId = UriBuilder.fromResource(Environment.class).build(null);
-            return Response.created(createdId).build();
-        }
-        throw new InternalServerErrorException("Entity couldn't be created");
+        Environment created = service.create(environment, artifactId);
+        return decorateCreatedEntity(created);
     }
 
     @RequestMapping(value = "/{environmentId:\\d+}", method = RequestMethod.DELETE)
-    public Response deleteArtifact(@PathVariable("environmentId") final long environmentId)
+    public ResponseEntity<?> deleteEnvironment(
+            @PathVariable("environmentId") final long environmentId)
     {
-        boolean deleted = envService.delete(environmentId);
-        if (deleted)
-        {
-            return Response.accepted().build();
-        }
-        throw new InternalServerErrorException("Entity couldn't be deleted");
+        return delete(environmentId);
     }
 
     @RequestMapping(value = "/{environmentId:\\d+}", method = RequestMethod.GET)
-    public Environment getEnvironment(@PathVariable("environmentId") final long environmentId)
+    public Environment getEnvironmentById(
+            @PathVariable("environmentId") final long environmentId)
     {
-        Environment environment = envService.getById(environmentId);
-        if (environment == null)
-        {
-            throw new NotFoundException("Entity not found");
-        }
-        return environment;
+        return getById(environmentId);
     }
+
 }

@@ -2,8 +2,12 @@ package pub.config.godfather.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pub.config.godfather.dao.artifact.ArtifactDao;
+import pub.config.godfather.dao.environment.EnvironmentDao;
 import pub.config.godfather.model.Artifact;
 import pub.config.godfather.model.Environment;
+import pub.config.godfather.model.User;
+import pub.config.godfather.security.SecurityHelper;
 
 import java.util.Collection;
 
@@ -12,41 +16,26 @@ import java.util.Collection;
  * @since 1.0
  */
 @Service
-public class EnvironmentsService
+public class EnvironmentsService extends BasicService<Environment, EnvironmentDao>
 {
 
     @Autowired
-    ArtifactsService artifactsService;
-
-    public Environment createForArtifact(Environment environment, Artifact parent)
+    public EnvironmentsService(EnvironmentDao dao)
     {
-        return null;
+        super(dao);
     }
 
-    public Environment createForArtifact(Environment environment, long artifactId)
+    public Environment create(
+            Environment entity,
+            Long artifactId)
     {
-        Artifact artifact = artifactsService.getById(artifactId);
-        return createForArtifact(environment, artifact);
+        User creator = SecurityHelper.getCurrentLoggedInUser();
+        return dao.create(entity, creator, artifactId);
     }
 
-    public Collection<Environment> getByArtifact(Artifact artifact)
+    public Collection<Environment> getEnvironmentsForArtifact(Long artifactId)
     {
-        return null;
-    }
-
-    public boolean delete(Environment environment)
-    {
-        return false;
-    }
-
-    public boolean delete(long environmentId)
-    {
-        Environment environment = getById(environmentId);
-        return delete(environment);
-    }
-
-    public Environment getById(long environmentId)
-    {
-        return null;
+        return dao.getEnvironmentsForArtifact(artifactId);
     }
 }
+

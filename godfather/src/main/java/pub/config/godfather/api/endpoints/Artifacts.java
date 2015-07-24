@@ -28,25 +28,26 @@ public class Artifacts extends BasicEndpoint<Artifact, ArtifactsService>
     @RequestMapping(method = RequestMethod.GET)
     public ApiPageResult<Artifact> getAllArtifacts()
     {
-        return getAll();
+        return super.getAll();
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createArtifact(@RequestBody Artifact artifact)
     {
-        return create(artifact);
+        Artifact created = service.create(artifact);
+        return decorateCreatedEntity(created);
     }
 
     @RequestMapping(value = "/{artifactId:\\d+}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteArtifact(@PathVariable("artifactId") final long artifactId)
     {
-        return delete(artifactId);
+        return super.delete(artifactId);
     }
 
     @RequestMapping(value = "/{artifactId:\\d+}", method = RequestMethod.GET)
     public Artifact getArtifactById(@PathVariable("artifactId") final long artifactId)
     {
-        return getById(artifactId);
+        return super.getById(artifactId);
     }
 
 }

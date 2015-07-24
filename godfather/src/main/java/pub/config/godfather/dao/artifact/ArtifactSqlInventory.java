@@ -7,7 +7,7 @@ import pub.config.godfather.dao.QueryFeeder;
  * @author alexandru.ionita
  * @since 1.0
  */
-public enum ArtifactSql implements QueryFeeder, CrudSqlInventory
+public enum ArtifactSqlInventory implements QueryFeeder, CrudSqlInventory
 {
     BASE,
     GET_ARTIFACT_BY_ID,

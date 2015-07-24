@@ -2,8 +2,6 @@ package pub.config.godfather.dao;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import pub.config.godfather.dao.artifact.ArtifactRowMapper;
-import pub.config.godfather.model.Artifact;
 import pub.config.godfather.model.RootModel;
 import pub.config.godfather.model.User;
 
@@ -11,8 +9,6 @@ import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-import static pub.config.godfather.dao.artifact.ArtifactSql.*;
 
 /**
  * @author alexandru.ionita
@@ -47,7 +43,16 @@ public abstract class BasicDao<T extends RootModel, K extends CrudSqlInventory>
         return getById(generatedId);
     }
 
-    public abstract T create(T artifact, User creator);
+    /**
+     * This method shouldn't be used from outside the DAO layer
+     * since it doesn't present a strict contract. Proxy methods
+     * that have strict contract should be defined.
+     * @param entity the entity to be created
+     * @param creator the creator of the entity
+     * @param objects parameters needed to create the entity
+     * @return the created entity
+     */
+    protected abstract T createWithParams(T entity, User creator, Object... objects);
 
     public boolean deleteById(final Long id)
     {
