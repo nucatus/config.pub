@@ -1,1 +1,4 @@
-insert into ENVIRONMENT (ID, NAME, ARTIFACT, CREATOR, TYPE) VALUES (:id, :name, :artifact, :creator, :type)
+insert into ENVIRONMENT
+  (ID, NAME, ARTIFACT, CREATOR, TYPE)
+VALUES
+  (:id, :name, :artifact, :creator, :type)

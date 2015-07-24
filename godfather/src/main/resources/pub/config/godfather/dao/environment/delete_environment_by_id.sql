@@ -1,1 +1,4 @@
-delete from ENVIRONMENT where ID=:id
+delete from
+  ENVIRONMENT
+where
+  ID=:id
