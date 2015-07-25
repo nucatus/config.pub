@@ -1,5 +1,8 @@
 package pub.config.godfather.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author alexandru.ionita
  * @since 1.0
@@ -95,6 +98,16 @@ public class Version implements Comparable<Version>
 
         private int order;
 
+        static Map<Integer, VersionStage> lookup = new HashMap<>();
+
+        static
+        {
+            for (VersionStage vs : VersionStage.values())
+            {
+                lookup.put(vs.getOrder(), vs);
+            }
+        }
+
         VersionStage(int order)
         {
             this.order = order;
@@ -103,6 +116,11 @@ public class Version implements Comparable<Version>
         public int getOrder()
         {
             return order;
+        }
+
+        public static VersionStage lookup(int id)
+        {
+            return lookup.get(id);
         }
     }
 }

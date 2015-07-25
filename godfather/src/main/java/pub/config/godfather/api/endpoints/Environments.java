@@ -31,7 +31,7 @@ public class Environments extends BasicEndpoint<Environment, EnvironmentsService
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createEnvironment(
-            @RequestBody Environment environment,
+            @RequestBody final Environment environment,
             @PathVariable final Long artifactId)
     {
         Environment created = service.create(environment, artifactId);
