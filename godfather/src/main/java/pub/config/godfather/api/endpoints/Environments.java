@@ -11,8 +11,8 @@ import pub.config.godfather.service.EnvironmentsService;
  * @author alexandru.ionita
  * @since 1.0
  */
-@RestController
-@RequestMapping("/api/artifacts/{artifactId:\\d+}/environments")
+    @RestController
+    @RequestMapping("/api/artifacts/{artifactId:\\d+}/environments")
 public class Environments extends BasicEndpoint<Environment, EnvironmentsService>
 {
 
@@ -31,7 +31,7 @@ public class Environments extends BasicEndpoint<Environment, EnvironmentsService
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createEnvironment(
-            @RequestBody Environment environment,
+            @RequestBody final Environment environment,
             @PathVariable final Long artifactId)
     {
         Environment created = service.create(environment, artifactId);

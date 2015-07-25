@@ -1,65 +1,55 @@
 package pub.config.godfather.model;
 
-import java.util.List;
-
 /**
  * @author alexandru.ionita
  * @since 1.0
  */
 public class Configuration extends RootModel
 {
-    private Artifact artifact;
-    private Environment environment;
-    private Configuration seed;
-    private List<ConfigurationItem> configItems;
+    private String name;
+    private Long artifactId;
+    private Long environmentId;
+    private Long configurationParent;
     private Version version;
 
-    public Artifact getArtifact()
+    public String getName()
     {
-        if (artifact == null && seed != null)
-        {
-            return seed.getArtifact();
-        }
-        return artifact;
+        return name;
     }
 
-    public void setArtifact(Artifact artifact)
+    public void setName(String name)
     {
-        this.artifact = artifact;
+        this.name = name;
     }
 
-    public Environment getEnvironment()
+    public Long getArtifactId()
     {
-        if (environment == null && seed != null)
-        {
-            return seed.getEnvironment();
-        }
-        return environment;
+        return artifactId;
     }
 
-    public void setEnvironment(Environment environment)
+    public void setArtifactId(Long artifactId)
     {
-        this.environment = environment;
+        this.artifactId = artifactId;
     }
 
-    public Configuration getSeed()
+    public Long getEnvironmentId()
     {
-        return seed;
+        return environmentId;
     }
 
-    public void setSeed(Configuration seed)
+    public void setEnvironmentId(Long environmentId)
     {
-        this.seed = seed;
+        this.environmentId = environmentId;
     }
 
-    public List<ConfigurationItem> getConfigItems()
+    public Long getConfigurationParent()
     {
-        return configItems;
+        return configurationParent;
     }
 
-    public void setConfigItems(List<ConfigurationItem> configItems)
+    public void setConfigurationParent(Long configurationParent)
     {
-        this.configItems = configItems;
+        this.configurationParent = configurationParent;
     }
 
     public Version getVersion()
