@@ -81,4 +81,12 @@ public class ConfigurationItemsService extends BasicService<ConfigurationItem, C
     {
         throw new IllegalArgumentException("This call is not supported");
     }
+
+    public String getConfigurationItemsAsString(Long configId)
+    {
+        return getConfigurationItemsForConfiguration(configId)
+                .stream().map(configItem ->
+                        configItem.getName() + "=" + String.valueOf(configItem.getValue()))
+                .collect(joining("\n"));
+    }
 }

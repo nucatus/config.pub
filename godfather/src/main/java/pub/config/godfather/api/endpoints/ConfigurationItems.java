@@ -1,6 +1,7 @@
 package pub.config.godfather.api.endpoints;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pub.config.godfather.api.util.ApiPageResult;
@@ -28,6 +29,14 @@ public class ConfigurationItems extends BasicEndpoint<ConfigurationItem, Configu
             @PathVariable final Long configId)
     {
         return new ApiPageResult<>(service.getConfigurationItemsForConfiguration(configId));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    @ResponseBody
+    public String getConfigurationItemsForCurrentConfigurationAsText(
+            @PathVariable final Long configId)
+    {
+        return service.getConfigurationItemsAsString(configId);
     }
 
     @RequestMapping(value = "/{configurationItemId:\\d+}", method = RequestMethod.GET)
