@@ -11,8 +11,8 @@ import pub.config.godfather.service.EnvironmentsService;
  * @author alexandru.ionita
  * @since 1.0
  */
-    @RestController
-    @RequestMapping("/api/artifacts/{artifactId:\\d+}/environments")
+@RestController
+@RequestMapping("/api/artifacts/{artifactId:\\d+}/environments")
 public class Environments extends BasicEndpoint<Environment, EnvironmentsService>
 {
 
