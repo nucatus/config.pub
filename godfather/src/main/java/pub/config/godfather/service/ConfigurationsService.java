@@ -1,11 +1,10 @@
 package pub.config.godfather.service;
 
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pub.config.godfather.dao.configuration.ConfigurationDao;
-import pub.config.godfather.dao.environment.EnvironmentDao;
-import pub.config.godfather.model.*;
+import pub.config.godfather.model.Configuration;
+import pub.config.godfather.model.User;
 import pub.config.godfather.security.SecurityHelper;
 
 import java.util.Collection;
