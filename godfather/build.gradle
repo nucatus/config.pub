@@ -32,9 +32,11 @@ dependencies {
     compile("org.springframework:spring-jdbc:4.1.7.RELEASE")
 
     compile("javax.ws.rs:javax.ws.rs-api:2.0.1")
+    compile("com.fasterxml.jackson.core:jackson-core:2.6.0")
+    compile("com.fasterxml.jackson.core:jackson-databind:2.6.0")
+
 
     compile("mysql:mysql-connector-java:5.1.36")
-
     compile("org.mongodb:mongo-java-driver:2.12.4")
 
     testCompile("org.testng:testng:6.9.6")
