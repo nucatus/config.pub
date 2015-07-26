@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pub.config.godfather.dao.BasicDao;
 import pub.config.godfather.model.Configuration;
-import pub.config.godfather.model.Environment;
 import pub.config.godfather.model.User;
 
 import javax.sql.DataSource;
@@ -25,7 +24,7 @@ public class ConfigurationDao extends
     public ConfigurationDao(DataSource dataSource)
     {
         super(dataSource);
-        defaultRawMapper = new ConfigurationRowMapper();
+        defaultRowMapper = new ConfigurationRowMapper();
         crudSql = ConfigurationSqlInventory.BASE;
     }
 
@@ -61,7 +60,7 @@ public class ConfigurationDao extends
         return jdbcTemplate.query(
                 crudSql.LIST_CONFIGURATIONS_FOR_ARTIFACT.getQuery(),
                 parameters,
-                defaultRawMapper);
+                defaultRowMapper);
     }
 
     public Collection<Configuration> getConfigurationsForEnvironment(Long environment)
@@ -71,6 +70,6 @@ public class ConfigurationDao extends
         return jdbcTemplate.query(
                 crudSql.LIST_CONFIGURATIONS_FOR_ENVIRONMENT.getQuery(),
                 parameters,
-                defaultRawMapper);
+                defaultRowMapper);
     }
 }

@@ -21,7 +21,7 @@ public class SecurityHelper
         u.setEmail("alexandru.ionita@gmail.com");
         Organization igenox = new Organization("Igenox");
         igenox.setId(1L);
-        u.setOrganization(igenox);
+        u.setOrganization(igenox.getId());
         return u;
     }
 }

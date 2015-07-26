@@ -22,7 +22,7 @@ public class ArtifactDao extends BasicDao<Artifact, ArtifactSqlInventory>
     public ArtifactDao(DataSource dataSource)
     {
         super(dataSource);
-        defaultRawMapper = new ArtifactRowMapper();
+        defaultRowMapper = new ArtifactRowMapper();
         crudSql = ArtifactSqlInventory.BASE;
     }
 
@@ -31,7 +31,7 @@ public class ArtifactDao extends BasicDao<Artifact, ArtifactSqlInventory>
     {
         return createWithParams(artifact,
                 creator,
-                creator.getOrganization().getId());
+                creator.getOrganization());
     }
 
     @Override
@@ -41,7 +41,7 @@ public class ArtifactDao extends BasicDao<Artifact, ArtifactSqlInventory>
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", artifact.getName());
         parameters.put("creator", creator.getId());
-        parameters.put("organization", creator.getOrganization().getId());
+        parameters.put("organization", creator.getOrganization());
         return super.create(parameters);
     }
 }

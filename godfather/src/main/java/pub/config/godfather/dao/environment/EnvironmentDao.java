@@ -3,8 +3,6 @@ package pub.config.godfather.dao.environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pub.config.godfather.dao.BasicDao;
-import pub.config.godfather.dao.artifact.ArtifactRowMapper;
-import pub.config.godfather.dao.artifact.ArtifactSqlInventory;
 import pub.config.godfather.model.Environment;
 import pub.config.godfather.model.User;
 
@@ -24,7 +22,7 @@ public class EnvironmentDao extends BasicDao<Environment, EnvironmentSqlInventor
     public EnvironmentDao(DataSource dataSource)
     {
         super(dataSource);
-        defaultRawMapper = new EnvironmentRowMapper();
+        defaultRowMapper = new EnvironmentRowMapper();
         crudSql = EnvironmentSqlInventory.BASE;
     }
 
@@ -36,7 +34,7 @@ public class EnvironmentDao extends BasicDao<Environment, EnvironmentSqlInventor
         return jdbcTemplate.query(
                 crudSql.LIST_ENVIRONMENTS_FOR_ARTIFACT.getQuery(),
                 parameters,
-                defaultRawMapper);
+                defaultRowMapper);
     }
 
     public Environment create(Environment environment,

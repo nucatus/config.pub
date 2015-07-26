@@ -24,7 +24,7 @@ public abstract class BasicService<M extends RootModel, T extends BasicDao<M, ? 
     public Collection<M> getAll()
     {
         return dao.getAll(
-                SecurityHelper.getCurrentLoggedInUser().getOrganization().getId());
+                SecurityHelper.getCurrentLoggedInUser().getOrganization());
     }
 
     public M getById(Long id)
