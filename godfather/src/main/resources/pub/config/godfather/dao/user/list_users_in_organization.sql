@@ -1,0 +1,11 @@
+select
+  ID,
+  USER,
+  FIRST_NAME,
+  LAST_NAME,
+  EMAIL,
+  ORGANIZATION
+from
+  USER
+WHERE
+  ORGANIZATION=:organization

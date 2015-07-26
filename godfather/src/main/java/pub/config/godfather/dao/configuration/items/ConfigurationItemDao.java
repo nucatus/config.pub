@@ -24,7 +24,7 @@ public class ConfigurationItemDao extends
     public ConfigurationItemDao(DataSource dataSource)
     {
         super(dataSource);
-        defaultRawMapper = new ConfigurationItemRowMapper();
+        defaultRowMapper = new ConfigurationItemRowMapper();
         crudSql = ConfigurationItemSqlInventory.BASE;
     }
 
@@ -49,7 +49,7 @@ public class ConfigurationItemDao extends
         return jdbcTemplate.query(
                 crudSql.LIST_CONFIGURATION_ITEMS_FOR_CONFIGURATION.getQuery(),
                 parameters,
-                defaultRawMapper);
+                defaultRowMapper);
     }
 
     public ConfigurationItem create(ConfigurationItem configurationItem,

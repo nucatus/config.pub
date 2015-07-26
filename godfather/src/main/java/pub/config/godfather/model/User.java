@@ -4,24 +4,13 @@ package pub.config.godfather.model;
  * @author alexandru.ionita
  * @since 1.0
  */
-public class User
+public class User extends RootModel
 {
-    private Long id;
     private String user;
     private String firstName;
     private String lastName;
     private String email;
-    private Organization organization;
-
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
+    private Long organization;
 
     public String getUser()
     {
@@ -63,12 +52,12 @@ public class User
         this.email = email;
     }
 
-    public void setOrganization(Organization organization)
+    public void setOrganization(Long organization)
     {
         this.organization = organization;
     }
 
-    public Organization getOrganization()
+    public Long getOrganization()
     {
         return organization;
     }

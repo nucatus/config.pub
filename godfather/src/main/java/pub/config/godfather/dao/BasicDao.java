@@ -17,7 +17,7 @@ import java.util.Map;
 public abstract class BasicDao<T extends RootModel, K extends CrudSqlInventory>
 {
     protected NamedParameterJdbcTemplate jdbcTemplate;
-    protected RowMapper<T> defaultRawMapper;
+    protected RowMapper<T> defaultRowMapper;
     protected K crudSql;
 
     public BasicDao(DataSource dataSource)
@@ -31,7 +31,7 @@ public abstract class BasicDao<T extends RootModel, K extends CrudSqlInventory>
         parameters.put("id", id);
         T found = jdbcTemplate.queryForObject(
                 crudSql.GET_BY_ID(),
-                parameters, defaultRawMapper);
+                parameters, defaultRowMapper);
         return found;
     }
 
@@ -82,6 +82,6 @@ public abstract class BasicDao<T extends RootModel, K extends CrudSqlInventory>
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("organization", organizationId);
         return jdbcTemplate.query(
-                crudSql.GET_ALL(), parameters, defaultRawMapper);
+                crudSql.GET_ALL(), parameters, defaultRowMapper);
     }
 }
