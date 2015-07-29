@@ -1,12 +1,9 @@
 rootProject.name = 'config.pub'
 
 include 'godfather'
-
 include 'client-java'
-
 include 'gradle-plugin'
-
 include 'maven-plugin'
-
 include 'frontend'
+include 'database'
 
