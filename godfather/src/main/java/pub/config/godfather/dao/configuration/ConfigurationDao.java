@@ -3,6 +3,7 @@ package pub.config.godfather.dao.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pub.config.godfather.dao.BasicDao;
+import pub.config.godfather.dao.UuidHelper;
 import pub.config.godfather.model.Configuration;
 import pub.config.godfather.model.User;
 
@@ -33,11 +34,7 @@ public class ConfigurationDao extends
                                 User creator,
                                 UUID artifactId)
     {
-        if (artifactId == null)
-        {
-            throw new IllegalArgumentException("Artifact ID must be non-null and valid UUID");
-        }
-        return createWithParams(configuration, creator, artifactId.toString());
+        return createWithParams(configuration, creator, UuidHelper.getValue(artifactId));
     }
 
     @Override
@@ -47,7 +44,7 @@ public class ConfigurationDao extends
     {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", entity.getName());
-        parameters.put("creator", creator.getId().toString());
+        parameters.put("creator", UuidHelper.getValue(creator.getId()));
         parameters.put("environment", entity.getEnvironmentId().map(UUID::toString).orElse(null));
         parameters.put("artifact", objects[0]);
         parameters.put("version_major", entity.getVersion().getMajor());
@@ -60,12 +57,8 @@ public class ConfigurationDao extends
 
     public Collection<Configuration> getConfigurationsForArtifact(UUID artifactId)
     {
-        if (artifactId == null)
-        {
-            throw new IllegalArgumentException("Artifact id must be non-null and a valid UUID");
-        }
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("artifact", artifactId.toString());
+        parameters.put("artifact", UuidHelper.getValue(artifactId));
         return jdbcTemplate.query(
                 crudSql.LIST_CONFIGURATIONS_FOR_ARTIFACT.getQuery(),
                 parameters,
