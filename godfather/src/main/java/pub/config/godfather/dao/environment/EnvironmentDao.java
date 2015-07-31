@@ -46,6 +46,10 @@ public class EnvironmentDao extends BasicDao<Environment, EnvironmentSqlInventor
                               User creator,
                               UUID artifactId)
     {
+        if (artifactId == null)
+        {
+            throw new IllegalArgumentException("The artifact ID must be non-null and a valid UUID");
+        }
         return createWithParams(environment, creator, artifactId.toString());
     }
 

@@ -36,10 +36,6 @@ public class Environments extends BasicEndpoint<Environment, EnvironmentsService
             @RequestBody final Environment environment,
             @PathVariable final UUID artifactId)
     {
-        if (artifactId == null)
-        {
-            throw new IllegalArgumentException("The artifact ID must be non-null and a valid UUID");
-        }
         Environment created = service.create(environment, artifactId);
         return decorateCreatedEntity(created);
     }
