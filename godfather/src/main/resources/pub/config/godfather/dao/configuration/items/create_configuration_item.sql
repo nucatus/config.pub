@@ -1,4 +1,4 @@
-insert into CONFIGURATION_ITEM
-  (ID, CONFIGURATION, K, V, TYPE)
+insert into
+  CONFIGURATION_ITEM (ID, CONFIGURATION, K, V, TYPE)
 values
-  (:id, :configuration, :name, :value, :type)
+  (toBin(:id), toBin(:configuration), :name, :value, :type)

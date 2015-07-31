@@ -1,1 +1,3 @@
-delete from USER where id=:id
+delete from
+  USER
+where id=toBin(:id)

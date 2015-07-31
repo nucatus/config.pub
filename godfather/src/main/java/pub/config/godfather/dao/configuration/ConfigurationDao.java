@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -30,9 +31,13 @@ public class ConfigurationDao extends
 
     public Configuration create(Configuration configuration,
                                 User creator,
-                                Long artifactId)
+                                UUID artifactId)
     {
-        return createWithParams(configuration, creator, artifactId);
+        if (artifactId == null)
+        {
+            throw new IllegalArgumentException("Artifact ID must be non-null and valid UUID");
+        }
+        return createWithParams(configuration, creator, artifactId.toString());
     }
 
     @Override
@@ -42,31 +47,35 @@ public class ConfigurationDao extends
     {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", entity.getName());
-        parameters.put("creator", creator.getId());
-        parameters.put("environment", entity.getEnvironmentId());
+        parameters.put("creator", creator.getId().toString());
+        parameters.put("environment", entity.getEnvironmentId().map(UUID::toString).orElse(null));
         parameters.put("artifact", objects[0]);
         parameters.put("version_major", entity.getVersion().getMajor());
         parameters.put("version_minor", entity.getVersion().getMinor());
         parameters.put("version_patch", entity.getVersion().getPatch());
         parameters.put("version_stage", entity.getVersion().getStage().getOrder());
-        parameters.put("parent", entity.getConfigurationParent());
+        parameters.put("parent", entity.getConfigurationParent().map(UUID::toString).orElse(null));
         return super.create(parameters);
     }
 
-    public Collection<Configuration> getConfigurationsForArtifact(Long artifactId)
+    public Collection<Configuration> getConfigurationsForArtifact(UUID artifactId)
     {
+        if (artifactId == null)
+        {
+            throw new IllegalArgumentException("Artifact id must be non-null and a valid UUID");
+        }
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("artifact", artifactId);
+        parameters.put("artifact", artifactId.toString());
         return jdbcTemplate.query(
                 crudSql.LIST_CONFIGURATIONS_FOR_ARTIFACT.getQuery(),
                 parameters,
                 defaultRowMapper);
     }
 
-    public Collection<Configuration> getConfigurationsForEnvironment(Long environment)
+    public Collection<Configuration> getConfigurationsForEnvironment(UUID environmentId)
     {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("environment", environment);
+        parameters.put("environment", environmentId);
         return jdbcTemplate.query(
                 crudSql.LIST_CONFIGURATIONS_FOR_ENVIRONMENT.getQuery(),
                 parameters,

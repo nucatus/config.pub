@@ -1,10 +1,13 @@
 select
-  ID,
-  K name,
-  V value,
-  TYPE,
-  CONFIGURATION
+  toUuid(ci.ID) id,
+  ci.K name,
+  ci.V value,
+  ci.TYPE,
+  toUuid(ci.CONFIGURATION) configuration,
+  cim.COMMENT
 from
-  CONFIGURATION_ITEM
+  CONFIGURATION_ITEM ci
+  left join CONFIGURATION_ITEM_COMMENT cim
+    on ci.ID = cim.CONFIGURATION_ITEM
 where
-  ID=:id
+  ci.ID=toBin(:id)

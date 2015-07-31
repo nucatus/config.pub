@@ -2,6 +2,7 @@ package pub.config.godfather.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -12,7 +13,22 @@ public class ConfigurationItem extends RootModel
     private String name;
     private Object value;
     private ItemType type;
-    private Long configurationId;
+    private UUID configurationId;
+    private String comment;
+
+    public ConfigurationItem()
+    {
+
+    }
+
+    public ConfigurationItem(ConfigurationItem another)
+    {
+        this.name = another.getName();
+        this.value = another.getValue();
+        this.type = another.getType();
+        this.configurationId = another.getConfigurationId();
+        this.comment = another.getComment();
+    }
 
     public String getName()
     {
@@ -44,14 +60,24 @@ public class ConfigurationItem extends RootModel
         this.type = type;
     }
 
-    public Long getConfigurationId()
+    public UUID getConfigurationId()
     {
         return configurationId;
     }
 
-    public void setConfigurationId(Long configurationId)
+    public void setConfigurationId(UUID configurationId)
     {
         this.configurationId = configurationId;
+    }
+
+    public String getComment()
+    {
+        return comment;
+    }
+
+    public void setComment(String comment)
+    {
+        this.comment = comment;
     }
 
     public enum ItemType

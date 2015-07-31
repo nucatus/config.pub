@@ -1,10 +1,10 @@
 select
-  ID,
+  toUuid(ID) id,
   NAME,
-  ARTIFACT,
-  CREATOR,
+  toUuid(ARTIFACT) artifact,
+  toUuid(CREATOR) creator,
   TYPE
 from
   ENVIRONMENT
 where
-  ID=:id
+  ID=toBin(:id)

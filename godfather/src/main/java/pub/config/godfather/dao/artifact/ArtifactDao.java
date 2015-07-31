@@ -40,8 +40,8 @@ public class ArtifactDao extends BasicDao<Artifact, ArtifactSqlInventory>
     {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", artifact.getName());
-        parameters.put("creator", creator.getId());
-        parameters.put("organization", creator.getOrganization());
+        parameters.put("creator", creator.getId().toString());
+        parameters.put("organization", creator.getOrganization().toString());
         return super.create(parameters);
     }
 }

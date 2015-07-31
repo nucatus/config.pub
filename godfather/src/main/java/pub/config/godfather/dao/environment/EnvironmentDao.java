@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -27,10 +28,14 @@ public class EnvironmentDao extends BasicDao<Environment, EnvironmentSqlInventor
     }
 
     public Collection<Environment> getEnvironmentsForArtifact(
-            Long artifactId)
+            UUID artifactId)
     {
+        if (artifactId == null)
+        {
+            throw new IllegalArgumentException("Artifact ID must be non null and a valid UUID");
+        }
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("artifact", artifactId);
+        parameters.put("artifact", artifactId.toString());
         return jdbcTemplate.query(
                 crudSql.LIST_ENVIRONMENTS_FOR_ARTIFACT.getQuery(),
                 parameters,
@@ -39,9 +44,13 @@ public class EnvironmentDao extends BasicDao<Environment, EnvironmentSqlInventor
 
     public Environment create(Environment environment,
                               User creator,
-                              Long artifactId)
+                              UUID artifactId)
     {
-        return createWithParams(environment, creator, artifactId);
+        if (artifactId == null)
+        {
+            throw new IllegalArgumentException("Artifact ID must be non-null and a valid UUID");
+        }
+        return createWithParams(environment, creator, artifactId.toString());
     }
 
     @Override
@@ -52,7 +61,7 @@ public class EnvironmentDao extends BasicDao<Environment, EnvironmentSqlInventor
     {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", environment.getName());
-        parameters.put("creator", creator.getId());
+        parameters.put("creator", creator.getId().toString());
         parameters.put("type", environment.getType().getId());
         parameters.put("artifact", input[0]);
         return super.create(parameters);

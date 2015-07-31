@@ -10,12 +10,14 @@ import pub.config.godfather.model.ConfigurationItem;
 import pub.config.godfather.service.ConfigurationItemsService;
 import pub.config.godfather.service.ConfigurationsService;
 
+import java.util.UUID;
+
 /**
  * @author alexandru.ionita
  * @since 1.0
  */
 @RestController
-@RequestMapping("/api/artifacts/{artifactId:\\d+}/configurations/{configId:\\d+}/items")
+@RequestMapping("/api/configurations/{configId}/items")
 public class ConfigurationItems extends BasicEndpoint<ConfigurationItem, ConfigurationItemsService>
 {
     @Autowired
@@ -26,7 +28,7 @@ public class ConfigurationItems extends BasicEndpoint<ConfigurationItem, Configu
 
     @RequestMapping(method = RequestMethod.GET)
     public ApiPageResult<ConfigurationItem> getConfigurationItemsForCurrentConfiguration(
-            @PathVariable final Long configId)
+            @PathVariable final UUID configId)
     {
         return new ApiPageResult<>(service.getConfigurationItemsForConfiguration(configId));
     }
@@ -34,14 +36,14 @@ public class ConfigurationItems extends BasicEndpoint<ConfigurationItem, Configu
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
     @ResponseBody
     public String getConfigurationItemsForCurrentConfigurationAsText(
-            @PathVariable final Long configId)
+            @PathVariable final UUID configId)
     {
         return service.getConfigurationItemsAsString(configId);
     }
 
-    @RequestMapping(value = "/{configurationItemId:\\d+}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{configurationItemId}", method = RequestMethod.GET)
     public ConfigurationItem getConfigurationById(
-            @PathVariable("configurationItemId") final long configurationItemId)
+            @PathVariable("configurationItemId") final UUID configurationItemId)
     {
         return getById(configurationItemId);
     }
@@ -49,15 +51,15 @@ public class ConfigurationItems extends BasicEndpoint<ConfigurationItem, Configu
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createConfigurationItem(
             @RequestBody final ConfigurationItem configurationItem,
-            @PathVariable final Long configId)
+            @PathVariable final UUID configId)
     {
         ConfigurationItem created = service.create(configurationItem, configId);
         return decorateCreatedEntity(created);
     }
 
-    @RequestMapping(value = "/{configurationItemId:\\d+}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{configurationItemId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteEnvironment(
-            @PathVariable("configurationItemId") final long configurationItemId)
+            @PathVariable("configurationItemId") final UUID configurationItemId)
     {
         return delete(configurationItemId);
     }

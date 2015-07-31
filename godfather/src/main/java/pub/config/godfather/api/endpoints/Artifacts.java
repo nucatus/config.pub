@@ -9,6 +9,7 @@ import pub.config.godfather.model.Artifact;
 import pub.config.godfather.service.ArtifactsService;
 
 import javax.ws.rs.*;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -38,14 +39,14 @@ public class Artifacts extends BasicEndpoint<Artifact, ArtifactsService>
         return decorateCreatedEntity(created);
     }
 
-    @RequestMapping(value = "/{artifactId:\\d+}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteArtifact(@PathVariable("artifactId") final long artifactId)
+    @RequestMapping(value = "/{artifactId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteArtifact(@PathVariable("artifactId") final UUID artifactId)
     {
         return super.delete(artifactId);
     }
 
-    @RequestMapping(value = "/{artifactId:\\d+}", method = RequestMethod.GET)
-    public Artifact getArtifactById(@PathVariable("artifactId") final long artifactId)
+    @RequestMapping(value = "/{artifactId}", method = RequestMethod.GET)
+    public Artifact getArtifactById(@PathVariable("artifactId") final UUID artifactId)
     {
         return super.getById(artifactId);
     }

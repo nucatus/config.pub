@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -42,10 +43,14 @@ public class ConfigurationItemDao extends
     }
 
     public Collection<ConfigurationItem> getConfigurationItemsForConfiguration(
-            Long configurationId)
+            final UUID configurationId)
     {
+        if (configurationId == null)
+        {
+            throw new IllegalArgumentException("Configurations id must be non-null and a valid UUID");
+        }
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("configuration", configurationId);
+        parameters.put("configuration", configurationId.toString());
         return jdbcTemplate.query(
                 crudSql.LIST_CONFIGURATION_ITEMS_FOR_CONFIGURATION.getQuery(),
                 parameters,
@@ -54,9 +59,13 @@ public class ConfigurationItemDao extends
 
     public ConfigurationItem create(ConfigurationItem configurationItem,
                                     User creator,
-                                    Long configurationId)
+                                    UUID configurationId)
     {
-        return createWithParams(configurationItem, creator, configurationId);
+        if (configurationId == null)
+        {
+            throw new IllegalArgumentException("Configuration ID shall not be null nor invalid UUID");
+        }
+        return createWithParams(configurationItem, creator, configurationId.toString());
     }
 }
 

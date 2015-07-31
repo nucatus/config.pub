@@ -5,6 +5,7 @@ import pub.config.godfather.model.Artifact;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -17,7 +18,7 @@ public class ArtifactRowMapper implements RowMapper<Artifact>
     {
         Artifact artifact = new Artifact();
         artifact.setName(rs.getString("NAME"));
-        artifact.setId(rs.getLong("ID"));
+        artifact.setId(UUID.fromString(rs.getString("id")));
         return artifact;
     }
 }

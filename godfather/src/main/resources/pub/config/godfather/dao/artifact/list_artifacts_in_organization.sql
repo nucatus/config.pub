@@ -1,9 +1,9 @@
 select
-  ID,
+  toUuid(ID) id,
   NAME,
-  CREATOR,
-  ORGANIZATION
+  toUuid(CREATOR) creator,
+  toUuid(ORGANIZATION) organization
 from
   ARTIFACT
 where
-  ORGANIZATION=:organization
+  ORGANIZATION=toBin(:organization)

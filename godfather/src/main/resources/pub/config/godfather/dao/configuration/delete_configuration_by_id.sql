@@ -1,1 +1,3 @@
-delete from CONFIGURATION where ID=:id
+delete from
+  CONFIGURATION
+where ID=toBin(:id)

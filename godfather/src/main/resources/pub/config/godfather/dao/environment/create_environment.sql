@@ -1,4 +1,4 @@
-insert into ENVIRONMENT
-  (ID, NAME, ARTIFACT, CREATOR, TYPE)
+insert into
+  ENVIRONMENT (ID, NAME, ARTIFACT, CREATOR, TYPE)
 VALUES
-  (:id, :name, :artifact, :creator, :type)
+  (toBin(:id), :name, toBin(:artifact), toBin(:creator), :type)

@@ -1,5 +1,8 @@
 package pub.config.godfather.model;
 
+import java.util.Optional;
+import java.util.UUID;
+
 /**
  * @author alexandru.ionita
  * @since 1.0
@@ -7,9 +10,9 @@ package pub.config.godfather.model;
 public class Configuration extends RootModel
 {
     private String name;
-    private Long artifactId;
-    private Long environmentId;
-    private Long configurationParent;
+    private UUID artifactId;
+    private UUID environmentId;
+    private UUID configurationParent;
     private Version version;
 
     public String getName()
@@ -22,32 +25,32 @@ public class Configuration extends RootModel
         this.name = name;
     }
 
-    public Long getArtifactId()
+    public UUID getArtifactId()
     {
         return artifactId;
     }
 
-    public void setArtifactId(Long artifactId)
+    public void setArtifactId(UUID artifactId)
     {
         this.artifactId = artifactId;
     }
 
-    public Long getEnvironmentId()
+    public Optional<UUID> getEnvironmentId()
     {
-        return environmentId;
+        return Optional.ofNullable(environmentId);
     }
 
-    public void setEnvironmentId(Long environmentId)
+    public void setEnvironmentId(UUID environmentId)
     {
         this.environmentId = environmentId;
     }
 
-    public Long getConfigurationParent()
+    public Optional<UUID> getConfigurationParent()
     {
-        return configurationParent;
+        return Optional.ofNullable(configurationParent);
     }
 
-    public void setConfigurationParent(Long configurationParent)
+    public void setConfigurationParent(UUID configurationParent)
     {
         this.configurationParent = configurationParent;
     }

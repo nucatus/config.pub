@@ -13,6 +13,7 @@ import pub.config.godfather.service.BasicService;
 
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotFoundException;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -42,7 +43,7 @@ public abstract class BasicEndpoint<M extends RootModel, T extends BasicService<
         return new ApiPageResult<>(service.getAll());
     }
 
-    public ResponseEntity<?> delete(final long entityId)
+    public ResponseEntity<?> delete(final UUID entityId)
     {
         boolean deleted = service.delete(entityId);
         if (deleted)
@@ -52,7 +53,7 @@ public abstract class BasicEndpoint<M extends RootModel, T extends BasicService<
         throw new InternalServerErrorException("Entity couldn't be deleted");
     }
 
-    public M getById(final long entityId)
+    public M getById(final UUID entityId)
     {
         M entity = service.getById(entityId);
         if (entity == null)

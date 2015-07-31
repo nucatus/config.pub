@@ -10,6 +10,7 @@ import pub.config.godfather.model.User;
 import pub.config.godfather.security.SecurityHelper;
 
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -27,13 +28,13 @@ public class EnvironmentsService extends BasicService<Environment, EnvironmentDa
 
     public Environment create(
             Environment entity,
-            Long artifactId)
+            UUID artifactId)
     {
         User creator = SecurityHelper.getCurrentLoggedInUser();
         return dao.create(entity, creator, artifactId);
     }
 
-    public Collection<Environment> getEnvironmentsForArtifact(Long artifactId)
+    public Collection<Environment> getEnvironmentsForArtifact(UUID artifactId)
     {
         return dao.getEnvironmentsForArtifact(artifactId);
     }

@@ -34,7 +34,7 @@ public class ConfigurationItemsService extends BasicService<ConfigurationItem, C
 
     public ConfigurationItem create(
             ConfigurationItem entity,
-            Long configurationId)
+            UUID configurationId)
     {
         User creator = SecurityHelper.getCurrentLoggedInUser();
         return dao.create(entity, creator, configurationId);
@@ -42,28 +42,43 @@ public class ConfigurationItemsService extends BasicService<ConfigurationItem, C
 
 
     public Collection<ConfigurationItem> getConfigurationItemsForConfiguration(
-            Long configurationId)
+            UUID configurationId)
     {
         Map<String, ConfigurationItem> chainItems = new HashMap<>();
         Stack<Configuration> configHierarchy = getInheritanceChain(configurationId);
 
         while (!configHierarchy.isEmpty())
         {
-            chainItems.putAll(
-                    dao.getConfigurationItemsForConfiguration(configHierarchy.pop().getId())
+            UUID childConfigId = configHierarchy.pop().getId();
+            Map<String, ConfigurationItem> currentConfigurationInHierarchyItems =
+                    dao.getConfigurationItemsForConfiguration(childConfigId)
                             .stream().collect(
-                                toMap(ConfigurationItem::getName, Function.identity())));
+                            toMap(ConfigurationItem::getName, Function.identity()));
+            // A null comment on a child won't override the non-null comment
+            // on a parent, thus a map merge is implemented
+            currentConfigurationInHierarchyItems.entrySet().stream()
+                    .forEach(child -> chainItems.merge(
+                            child.getKey(),
+                            child.getValue(),
+                            (oldVal, newVal) -> {
+                                ConfigurationItem mergedItem = new ConfigurationItem(newVal);
+                                if (oldVal.getComment() != null && newVal.getComment() == null)
+                                {
+                                    mergedItem.setComment(oldVal.getComment());
+                                }
+                                return mergedItem;
+                            }));
         }
         return chainItems.values();
     }
 
-    private Stack<Configuration> getInheritanceChain(Long configurationId)
+    private Stack<Configuration> getInheritanceChain(UUID configurationId)
     {
         Stack<Configuration> configHierarchy = new Stack<>();
         Configuration configuration = configService.getById(configurationId);
         configHierarchy.push(configuration);
-        Long parentId;
-        while ((parentId = configuration.getConfigurationParent()) != 0L)
+        UUID parentId;
+        while ((parentId = configuration.getConfigurationParent().orElse(null)) != null)
         {
             configuration = configService.getById(parentId);
             configHierarchy.push(configuration);
@@ -82,7 +97,7 @@ public class ConfigurationItemsService extends BasicService<ConfigurationItem, C
         throw new IllegalArgumentException("This call is not supported");
     }
 
-    public String getConfigurationItemsAsString(Long configId)
+    public String getConfigurationItemsAsString(final UUID configId)
     {
         return getConfigurationItemsForConfiguration(configId)
                 .stream().map(configItem ->

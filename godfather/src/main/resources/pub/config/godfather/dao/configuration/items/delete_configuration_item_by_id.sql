@@ -1,2 +1,3 @@
-delete from CONFIGURATION_ITEM
-where id=:id
+delete from
+  CONFIGURATION_ITEM
+where id=toBin(:id)

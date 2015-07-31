@@ -1,4 +1,4 @@
 delete from
   ENVIRONMENT
 where
-  ID=:id
+  ID=toBin(:id)

@@ -1,1 +1,3 @@
-delete from ARTIFACT where ID=:id
+delete
+from ARTIFACT
+where ID=toBin(:id)

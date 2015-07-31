@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -25,10 +26,14 @@ public abstract class BasicDao<T extends RootModel, K extends CrudSqlInventory>
         jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public T getById(final Long id)
+    public T getById(final UUID id)
     {
+        if (id == null)
+        {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("id", id);
+        parameters.put("id", id.toString());
         T found = jdbcTemplate.queryForObject(
                 crudSql.GET_BY_ID(),
                 parameters, defaultRowMapper);
@@ -37,8 +42,8 @@ public abstract class BasicDao<T extends RootModel, K extends CrudSqlInventory>
 
     protected T create(final Map<String, Object> sqlParams)
     {
-        Long generatedId = nextSeq();
-        sqlParams.put("id", generatedId);
+        UUID generatedId = nextSeq();
+        sqlParams.put("id", generatedId.toString());
         jdbcTemplate.update(crudSql.CREATE(), sqlParams);
         return getById(generatedId);
     }
@@ -54,10 +59,14 @@ public abstract class BasicDao<T extends RootModel, K extends CrudSqlInventory>
      */
     protected abstract T createWithParams(T entity, User creator, Object... objects);
 
-    public boolean deleteById(final Long id)
+    public boolean deleteById(final UUID id)
     {
+        if (id == null)
+        {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("id", id);
+        parameters.put("id", id.toString());
         int rowsCount = jdbcTemplate.update(
                 crudSql.DELETE(),
                 parameters);
@@ -69,18 +78,15 @@ public abstract class BasicDao<T extends RootModel, K extends CrudSqlInventory>
         return deleteById(t.getId());
     }
 
-    private Long nextSeq()
+    protected UUID nextSeq()
     {
-        return jdbcTemplate.queryForObject(
-                BasicSqlInventory.NEXT_SEQ.getQuery(),
-                new HashMap<>(),
-                Long.class);
+        return UUID.randomUUID();
     }
 
-    public Collection<T> getAll(Long organizationId)
+    public Collection<T> getAll(UUID organizationId)
     {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("organization", organizationId);
+        parameters.put("organization", organizationId.toString());
         return jdbcTemplate.query(
                 crudSql.GET_ALL(), parameters, defaultRowMapper);
     }
