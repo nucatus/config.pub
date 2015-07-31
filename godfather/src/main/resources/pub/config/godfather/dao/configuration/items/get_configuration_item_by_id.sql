@@ -10,4 +10,4 @@ from
   left join CONFIGURATION_ITEM_COMMENT cim
     on ci.ID = cim.CONFIGURATION_ITEM
 where
-  ID=toBin(:id)
+  ci.ID=toBin(:id)

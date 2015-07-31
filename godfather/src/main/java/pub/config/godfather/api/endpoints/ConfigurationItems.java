@@ -17,7 +17,7 @@ import java.util.UUID;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/api/artifacts/{artifactId}/configurations/{configId}/items")
+@RequestMapping("/api/configurations/{configId}/items")
 public class ConfigurationItems extends BasicEndpoint<ConfigurationItem, ConfigurationItemsService>
 {
     @Autowired

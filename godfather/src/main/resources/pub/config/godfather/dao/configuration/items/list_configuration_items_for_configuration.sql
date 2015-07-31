@@ -1,5 +1,5 @@
 select
-  toUuid(ci.ID),
+  toUuid(ci.ID) id,
   ci.K name,
   ci.V value,
   ci.TYPE,
