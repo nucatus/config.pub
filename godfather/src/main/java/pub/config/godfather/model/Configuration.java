@@ -1,5 +1,6 @@
 package pub.config.godfather.model;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -34,9 +35,9 @@ public class Configuration extends RootModel
         this.artifactId = artifactId;
     }
 
-    public UUID getEnvironmentId()
+    public Optional<UUID> getEnvironmentId()
     {
-        return environmentId;
+        return Optional.ofNullable(environmentId);
     }
 
     public void setEnvironmentId(UUID environmentId)
@@ -44,9 +45,9 @@ public class Configuration extends RootModel
         this.environmentId = environmentId;
     }
 
-    public UUID getConfigurationParent()
+    public Optional<UUID> getConfigurationParent()
     {
-        return configurationParent;
+        return Optional.ofNullable(configurationParent);
     }
 
     public void setConfigurationParent(UUID configurationParent)

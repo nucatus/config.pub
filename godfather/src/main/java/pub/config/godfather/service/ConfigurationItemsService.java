@@ -78,7 +78,7 @@ public class ConfigurationItemsService extends BasicService<ConfigurationItem, C
         Configuration configuration = configService.getById(configurationId);
         configHierarchy.push(configuration);
         UUID parentId;
-        while ((parentId = configuration.getConfigurationParent()) != null)
+        while ((parentId = configuration.getConfigurationParent().orElse(null)) != null)
         {
             configuration = configService.getById(parentId);
             configHierarchy.push(configuration);

@@ -21,8 +21,14 @@ public class ConfigurationRowMapper implements RowMapper<Configuration>
         Version version = new Version();
         configuration.setName(rs.getString("NAME"));
         configuration.setArtifactId(UUID.fromString(rs.getString("artifact")));
-        configuration.setEnvironmentId(UUID.fromString(rs.getString("environment")));
-        configuration.setConfigurationParent(UUID.fromString(rs.getString("parent")));
+        if (rs.getString("environment") != null)
+        {
+            configuration.setEnvironmentId(UUID.fromString(rs.getString("environment")));
+        }
+        if (rs.getString("parent") != null)
+        {
+            configuration.setConfigurationParent(UUID.fromString(rs.getString("parent")));
+        }
         configuration.setId(UUID.fromString(rs.getString("id")));
         version.setMajor(rs.getInt("VERSION_MAJOR"));
         version.setMinor(rs.getInt("VERSION_MINOR"));
