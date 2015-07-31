@@ -1,14 +1,14 @@
 select
-  ID,
-  PARENT,
+  toUuid(ID) id,
+  toUuid(PARENT) parent,
   NAME,
   VERSION_MAJOR,
   VERSION_MINOR,
   VERSION_PATCH,
   VERSION_STAGE,
-  ENVIRONMENT,
-  ARTIFACT
+  toUuid(ENVIRONMENT) environment,
+  toUuid(ARTIFACT) artifact
 from
   CONFIGURATION
 where
-  ID=:id
+  ID=toBin(:id)

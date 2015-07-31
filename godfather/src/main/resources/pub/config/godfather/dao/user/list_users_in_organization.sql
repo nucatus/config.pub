@@ -1,11 +1,11 @@
 select
-  ID,
+  toUuid(ID) id,
   USER,
   FIRST_NAME,
   LAST_NAME,
   EMAIL,
-  ORGANIZATION
+  toUuid(ORGANIZATION) organization
 from
   USER
 WHERE
-  ORGANIZATION=:organization
+  ORGANIZATION=toBin(:organization)

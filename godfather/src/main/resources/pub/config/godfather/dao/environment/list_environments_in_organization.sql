@@ -1,8 +1,8 @@
 select
-  env.ID,
+  toUuid(env.ID) id,
   env.NAME,
-  env.ARTIFACT,
-  env.CREATOR,
+  toUuid(env.ARTIFACT) artifact,
+  toUuid(env.CREATOR) creator,
   env.TYPE
 from
   ENVIRONMENT env
@@ -10,4 +10,4 @@ left join
   ARTIFACT artf
   on env.ARTIFACT=artf.ID
 where
-  artf.ORGANIZATION=:organization
+  artf.ORGANIZATION=toBin(:organization)

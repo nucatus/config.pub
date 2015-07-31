@@ -1,1 +1,4 @@
-insert into ARTIFACT (ID, NAME, CREATOR, ORGANIZATION) values (:id, :name, :creator, :organization);
+insert into
+  ARTIFACT (ID, NAME, CREATOR, ORGANIZATION)
+values
+  (toBin(:id), :name, toBin(:creator), toBin(:organization));

@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -30,7 +31,7 @@ public class ConfigurationDao extends
 
     public Configuration create(Configuration configuration,
                                 User creator,
-                                Long artifactId)
+                                UUID artifactId)
     {
         return createWithParams(configuration, creator, artifactId);
     }
@@ -53,7 +54,7 @@ public class ConfigurationDao extends
         return super.create(parameters);
     }
 
-    public Collection<Configuration> getConfigurationsForArtifact(Long artifactId)
+    public Collection<Configuration> getConfigurationsForArtifact(UUID artifactId)
     {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("artifact", artifactId);
@@ -63,10 +64,10 @@ public class ConfigurationDao extends
                 defaultRowMapper);
     }
 
-    public Collection<Configuration> getConfigurationsForEnvironment(Long environment)
+    public Collection<Configuration> getConfigurationsForEnvironment(UUID environmentId)
     {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("environment", environment);
+        parameters.put("environment", environmentId);
         return jdbcTemplate.query(
                 crudSql.LIST_CONFIGURATIONS_FOR_ENVIRONMENT.getQuery(),
                 parameters,

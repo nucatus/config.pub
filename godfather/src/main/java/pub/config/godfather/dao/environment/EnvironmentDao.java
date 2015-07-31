@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -27,7 +28,7 @@ public class EnvironmentDao extends BasicDao<Environment, EnvironmentSqlInventor
     }
 
     public Collection<Environment> getEnvironmentsForArtifact(
-            Long artifactId)
+            UUID artifactId)
     {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("artifact", artifactId);
@@ -39,7 +40,7 @@ public class EnvironmentDao extends BasicDao<Environment, EnvironmentSqlInventor
 
     public Environment create(Environment environment,
                               User creator,
-                              Long artifactId)
+                              UUID artifactId)
     {
         return createWithParams(environment, creator, artifactId);
     }

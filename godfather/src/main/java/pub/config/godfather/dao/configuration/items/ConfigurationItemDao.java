@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -42,7 +43,7 @@ public class ConfigurationItemDao extends
     }
 
     public Collection<ConfigurationItem> getConfigurationItemsForConfiguration(
-            Long configurationId)
+            final UUID configurationId)
     {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("configuration", configurationId);
@@ -54,7 +55,7 @@ public class ConfigurationItemDao extends
 
     public ConfigurationItem create(ConfigurationItem configurationItem,
                                     User creator,
-                                    Long configurationId)
+                                    UUID configurationId)
     {
         return createWithParams(configurationItem, creator, configurationId);
     }

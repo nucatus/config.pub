@@ -6,6 +6,7 @@ import pub.config.godfather.processors.ItemProcessor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -19,8 +20,8 @@ public class ConfigurationItemRowMapper implements RowMapper<ConfigurationItem>
         ConfigurationItem item = new ConfigurationItem();
         item.setName(rs.getString("name"));
         item.setType(ConfigurationItem.ItemType.getById(rs.getInt("type")));
-        item.setId(rs.getLong("id"));
-        item.setConfigurationId(rs.getLong("configuration"));
+        item.setId(UUID.fromString(rs.getString("id")));
+        item.setConfigurationId(UUID.fromString(rs.getString("configuration")));
         item.setValue(rs.getString("value"));
         return ItemProcessor.deserialize(item);
     }

@@ -8,12 +8,14 @@ import pub.config.godfather.model.Configuration;
 import pub.config.godfather.model.Environment;
 import pub.config.godfather.service.ConfigurationsService;
 
+import java.util.UUID;
+
 /**
  * @author alexandru.ionita
  * @since 1.0
  */
 @RestController
-@RequestMapping("/api/artifacts/{artifactId:\\d+}")
+@RequestMapping("/api/artifacts/{artifactId}")
 public class Configurations extends BasicEndpoint<Configuration, ConfigurationsService>
 {
     @Autowired
@@ -24,22 +26,22 @@ public class Configurations extends BasicEndpoint<Configuration, ConfigurationsS
 
     @RequestMapping(value = "/configurations", method = RequestMethod.GET)
     public ApiPageResult<Configuration> getConfigurationsForCurrentArtifact(
-            @PathVariable final Long artifactId)
+            @PathVariable final UUID artifactId)
     {
         return new ApiPageResult<>(service.getConfigurationsForArtifact(artifactId));
     }
 
-    @RequestMapping(value = "/environments/{environmentId:\\d+}/configurations",
+    @RequestMapping(value = "/environments/{environmentId}/configurations",
                     method = RequestMethod.GET)
     public ApiPageResult<Configuration> getConfigurationsForCurrentEnvironment(
-            @PathVariable final Long environmentId)
+            @PathVariable final UUID environmentId)
     {
         return new ApiPageResult<>(service.getConfigurationsForEnvironment(environmentId));
     }
 
-    @RequestMapping(value = "/configurations/{configurationId:\\d+}", method = RequestMethod.GET)
+    @RequestMapping(value = "/configurations/{configurationId}", method = RequestMethod.GET)
     public Configuration getConfigurationById(
-            @PathVariable("configurationId") final long configurationId)
+            @PathVariable("configurationId") final UUID configurationId)
     {
         return getById(configurationId);
     }
@@ -47,16 +49,16 @@ public class Configurations extends BasicEndpoint<Configuration, ConfigurationsS
     @RequestMapping(value = "/configurations", method = RequestMethod.POST)
     public ResponseEntity<?> createConfiguration(
             @RequestBody final Configuration configuration,
-            @PathVariable final Long artifactId)
+            @PathVariable final UUID artifactId)
     {
         Configuration created = service.create(configuration, artifactId);
         return decorateCreatedEntity(created);
     }
 
-    @RequestMapping(value = "/configurations/{configurationId:\\d+}",
+    @RequestMapping(value = "/configurations/{configurationId}",
                     method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteEnvironment(
-            @PathVariable("configurationId") final long configurationId)
+            @PathVariable("configurationId") final UUID configurationId)
     {
         return delete(configurationId);
     }

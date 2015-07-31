@@ -7,6 +7,7 @@ import pub.config.godfather.model.User;
 import pub.config.godfather.security.SecurityHelper;
 
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -30,7 +31,7 @@ public class UsersService extends BasicService<User, UserDao>
 
     public Collection<User> getUsersForCurrentAccount()
     {
-        Long organizationId = SecurityHelper.getCurrentLoggedInUser().getId();
+        UUID organizationId = SecurityHelper.getCurrentLoggedInUser().getOrganization();
         return dao.getAll(organizationId);
     }
 }

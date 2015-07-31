@@ -7,6 +7,7 @@ import pub.config.godfather.model.User;
 import pub.config.godfather.security.SecurityHelper;
 
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -27,7 +28,7 @@ public abstract class BasicService<M extends RootModel, T extends BasicDao<M, ? 
                 SecurityHelper.getCurrentLoggedInUser().getOrganization());
     }
 
-    public M getById(Long id)
+    public M getById(UUID id)
     {
         return dao.getById(id);
     }
@@ -37,7 +38,7 @@ public abstract class BasicService<M extends RootModel, T extends BasicDao<M, ? 
         return dao.deleteById(entity.getId());
     }
 
-    public boolean delete(Long entityId)
+    public boolean delete(UUID entityId)
     {
         return dao.deleteById(entityId);
     }

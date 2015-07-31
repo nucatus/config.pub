@@ -3,6 +3,8 @@ package pub.config.godfather.security;
 import pub.config.godfather.model.Organization;
 import pub.config.godfather.model.User;
 
+import java.util.UUID;
+
 /**
  * @author alexandru.ionita
  * @since 1.0
@@ -14,13 +16,13 @@ public class SecurityHelper
     {
         //  TODO: refactor the dummy implementation
         User u = new User();
-        u.setId(1L);
+        u.setId(UUID.fromString("C2B33A6F-374D-11E5-914E-0242AC110001"));
         u.setUser("nucatus");
         u.setFirstName("Alexandru");
         u.setLastName("Ionita");
         u.setEmail("alexandru.ionita@gmail.com");
         Organization igenox = new Organization("Igenox");
-        igenox.setId(1L);
+        igenox.setId(UUID.fromString("43B97CD5-374D-11E5-914E-0242AC110001"));
         u.setOrganization(igenox.getId());
         return u;
     }

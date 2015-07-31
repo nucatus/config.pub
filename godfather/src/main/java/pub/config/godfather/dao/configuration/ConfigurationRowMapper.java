@@ -6,6 +6,7 @@ import pub.config.godfather.model.Version;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -19,10 +20,10 @@ public class ConfigurationRowMapper implements RowMapper<Configuration>
         Configuration configuration = new Configuration();
         Version version = new Version();
         configuration.setName(rs.getString("NAME"));
-        configuration.setArtifactId(rs.getLong("ARTIFACT"));
-        configuration.setEnvironmentId(rs.getLong("ENVIRONMENT"));
-        configuration.setConfigurationParent(rs.getLong("PARENT"));
-        configuration.setId(rs.getLong("ID"));
+        configuration.setArtifactId(UUID.fromString(rs.getString("artifact")));
+        configuration.setEnvironmentId(UUID.fromString(rs.getString("environment")));
+        configuration.setConfigurationParent(UUID.fromString(rs.getString("parent")));
+        configuration.setId(UUID.fromString(rs.getString("id")));
         version.setMajor(rs.getInt("VERSION_MAJOR"));
         version.setMinor(rs.getInt("VERSION_MINOR"));
         version.setPatch(rs.getInt("VERSION_PATCH"));

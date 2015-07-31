@@ -7,6 +7,8 @@ import pub.config.godfather.api.util.ApiPageResult;
 import pub.config.godfather.model.User;
 import pub.config.godfather.service.UsersService;
 
+import java.util.UUID;
+
 /**
  * @author alexandru.ionita
  * @since 1.0
@@ -36,16 +38,16 @@ public class Users extends BasicEndpoint<User, UsersService>
         return decorateCreatedEntity(created);
     }
 
-    @RequestMapping(value = "/{userId:\\d+}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(
-            @PathVariable("userId") final long userId)
+            @PathVariable("userId") final UUID userId)
     {
         return delete(userId);
     }
 
-    @RequestMapping(value = "/{userId:\\d+}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public User getUserById(
-            @PathVariable("userId") final long userId)
+            @PathVariable("userId") final UUID userId)
     {
         return getById(userId);
     }

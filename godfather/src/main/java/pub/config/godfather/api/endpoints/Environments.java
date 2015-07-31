@@ -7,12 +7,14 @@ import pub.config.godfather.api.util.ApiPageResult;
 import pub.config.godfather.model.Environment;
 import pub.config.godfather.service.EnvironmentsService;
 
+import java.util.UUID;
+
 /**
  * @author alexandru.ionita
  * @since 1.0
  */
 @RestController
-@RequestMapping("/api/artifacts/{artifactId:\\d+}/environments")
+@RequestMapping("/api/artifacts/{artifactId}/environments")
 public class Environments extends BasicEndpoint<Environment, EnvironmentsService>
 {
 
@@ -24,7 +26,7 @@ public class Environments extends BasicEndpoint<Environment, EnvironmentsService
 
     @RequestMapping(method = RequestMethod.GET)
     public ApiPageResult<Environment> getEnvironmentsForCurrentArtifact(
-            @PathVariable final Long artifactId)
+            @PathVariable final UUID artifactId)
     {
         return new ApiPageResult<>(service.getEnvironmentsForArtifact(artifactId));
     }
@@ -32,22 +34,22 @@ public class Environments extends BasicEndpoint<Environment, EnvironmentsService
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createEnvironment(
             @RequestBody final Environment environment,
-            @PathVariable final Long artifactId)
+            @PathVariable final UUID artifactId)
     {
         Environment created = service.create(environment, artifactId);
         return decorateCreatedEntity(created);
     }
 
-    @RequestMapping(value = "/{environmentId:\\d+}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{environmentId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteEnvironment(
-            @PathVariable("environmentId") final long environmentId)
+            @PathVariable("environmentId") final UUID environmentId)
     {
         return delete(environmentId);
     }
 
-    @RequestMapping(value = "/{environmentId:\\d+}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{environmentId}", method = RequestMethod.GET)
     public Environment getEnvironmentById(
-            @PathVariable("environmentId") final long environmentId)
+            @PathVariable("environmentId") final UUID environmentId)
     {
         return getById(environmentId);
     }

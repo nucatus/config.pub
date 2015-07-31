@@ -8,6 +8,7 @@ import pub.config.godfather.model.User;
 import pub.config.godfather.security.SecurityHelper;
 
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * @author alexandru.ionita
@@ -25,19 +26,19 @@ public class ConfigurationsService extends BasicService<Configuration, Configura
 
     public Configuration create(
             Configuration entity,
-            Long artifactId)
+            UUID artifactId)
     {
         User creator = SecurityHelper.getCurrentLoggedInUser();
         return dao.create(entity, creator, artifactId);
     }
 
 
-    public Collection<Configuration> getConfigurationsForArtifact(Long artifactId)
+    public Collection<Configuration> getConfigurationsForArtifact(UUID artifactId)
     {
         return dao.getConfigurationsForArtifact(artifactId);
     }
 
-    public Collection<Configuration> getConfigurationsForEnvironment(Long environment)
+    public Collection<Configuration> getConfigurationsForEnvironment(UUID environment)
     {
         return dao.getConfigurationsForEnvironment(environment);
     }

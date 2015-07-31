@@ -1,5 +1,7 @@
 package pub.config.godfather.model;
 
+import java.util.UUID;
+
 /**
  * @author alexandru.ionita
  * @since 1.0
@@ -10,7 +12,7 @@ public class User extends RootModel
     private String firstName;
     private String lastName;
     private String email;
-    private Long organization;
+    private UUID organization;
 
     public String getUser()
     {
@@ -52,12 +54,12 @@ public class User extends RootModel
         this.email = email;
     }
 
-    public void setOrganization(Long organization)
+    public void setOrganization(UUID organization)
     {
         this.organization = organization;
     }
 
-    public Long getOrganization()
+    public UUID getOrganization()
     {
         return organization;
     }
