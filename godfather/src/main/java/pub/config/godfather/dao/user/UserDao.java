@@ -34,11 +34,11 @@ public class UserDao extends BasicDao<User, UserSqlInventory>
     protected User createWithParams(User entity, User creator, Object... objects)
     {
         Map<String, Object> params = new HashMap<>();
-        params.put("user", entity.getUser());
+        params.put("user_name", entity.getUsername());
         params.put("first_name", entity.getFirstName());
         params.put("last_name", entity.getLastName());
         params.put("email", entity.getEmail());
-        params.put("organization", creator.getOrganization());
+        params.put("organization", creator.getOrganization().toString());
         return super.create(params);
     }
 }

@@ -17,7 +17,7 @@ public class SecurityHelper
         //  TODO: refactor the dummy implementation
         User u = new User();
         u.setId(UUID.fromString("C2B33A6F-374D-11E5-914E-0242AC110001"));
-        u.setUser("nucatus");
+        u.setUsername("nucatus");
         u.setFirstName("Alexandru");
         u.setLastName("Ionita");
         u.setEmail("alexandru.ionita@gmail.com");

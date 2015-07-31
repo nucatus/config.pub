@@ -1,6 +1,6 @@
 select
   toUuid(ID) id,
-  USER,
+  USERNAME,
   FIRST_NAME,
   LAST_NAME,
   EMAIL,

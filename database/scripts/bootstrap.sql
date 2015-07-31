@@ -9,7 +9,7 @@ CREATE TABLE `ORGANIZATION` (
 
 CREATE TABLE `USER` (
   `ID` binary(16) NOT NULL,
-  `USER` varchar(25) NOT NULL,
+  `USERNAME` varchar(25) NOT NULL,
   `PASS` varchar(30) DEFAULT NULL,
   `SALT` varchar(15) DEFAULT NULL,
   `FIRST_NAME` varchar(25) DEFAULT NULL,

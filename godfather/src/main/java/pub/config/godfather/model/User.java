@@ -8,20 +8,20 @@ import java.util.UUID;
  */
 public class User extends RootModel
 {
-    private String user;
+    private String username;
     private String firstName;
     private String lastName;
     private String email;
     private UUID organization;
 
-    public String getUser()
+    public String getUsername()
     {
-        return user;
+        return username;
     }
 
-    public void setUser(String user)
+    public void setUsername(String username)
     {
-        this.user = user;
+        this.username = username;
     }
 
     public String getFirstName()
