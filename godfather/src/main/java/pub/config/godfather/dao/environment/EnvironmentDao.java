@@ -3,6 +3,7 @@ package pub.config.godfather.dao.environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pub.config.godfather.dao.BasicDao;
+import pub.config.godfather.dao.UuidHelper;
 import pub.config.godfather.model.Environment;
 import pub.config.godfather.model.User;
 
@@ -30,12 +31,8 @@ public class EnvironmentDao extends BasicDao<Environment, EnvironmentSqlInventor
     public Collection<Environment> getEnvironmentsForArtifact(
             UUID artifactId)
     {
-        if (artifactId == null)
-        {
-            throw new IllegalArgumentException("Artifact ID must be non null and a valid UUID");
-        }
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("artifact", artifactId.toString());
+        parameters.put("artifact", UuidHelper.getValue(artifactId));
         return jdbcTemplate.query(
                 crudSql.LIST_ENVIRONMENTS_FOR_ARTIFACT.getQuery(),
                 parameters,
@@ -46,11 +43,7 @@ public class EnvironmentDao extends BasicDao<Environment, EnvironmentSqlInventor
                               User creator,
                               UUID artifactId)
     {
-        if (artifactId == null)
-        {
-            throw new IllegalArgumentException("Artifact ID must be non-null and a valid UUID");
-        }
-        return createWithParams(environment, creator, artifactId.toString());
+        return createWithParams(environment, creator, UuidHelper.getValue(artifactId));
     }
 
     @Override
@@ -61,7 +54,7 @@ public class EnvironmentDao extends BasicDao<Environment, EnvironmentSqlInventor
     {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", environment.getName());
-        parameters.put("creator", creator.getId().toString());
+        parameters.put("creator", UuidHelper.getValue(creator.getId()));
         parameters.put("type", environment.getType().getId());
         parameters.put("artifact", input[0]);
         return super.create(parameters);

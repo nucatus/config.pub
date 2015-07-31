@@ -3,6 +3,7 @@ package pub.config.godfather.dao.configuration.items;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pub.config.godfather.dao.BasicDao;
+import pub.config.godfather.dao.UuidHelper;
 import pub.config.godfather.model.ConfigurationItem;
 import pub.config.godfather.model.User;
 import pub.config.godfather.processors.ItemProcessor;
@@ -45,12 +46,8 @@ public class ConfigurationItemDao extends
     public Collection<ConfigurationItem> getConfigurationItemsForConfiguration(
             final UUID configurationId)
     {
-        if (configurationId == null)
-        {
-            throw new IllegalArgumentException("Configurations id must be non-null and a valid UUID");
-        }
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("configuration", configurationId.toString());
+        parameters.put("configuration", UuidHelper.getValue(configurationId));
         return jdbcTemplate.query(
                 crudSql.LIST_CONFIGURATION_ITEMS_FOR_CONFIGURATION.getQuery(),
                 parameters,
@@ -61,11 +58,7 @@ public class ConfigurationItemDao extends
                                     User creator,
                                     UUID configurationId)
     {
-        if (configurationId == null)
-        {
-            throw new IllegalArgumentException("Configuration ID shall not be null nor invalid UUID");
-        }
-        return createWithParams(configurationItem, creator, configurationId.toString());
+        return createWithParams(configurationItem, creator, UuidHelper.getValue(configurationId));
     }
 }
 

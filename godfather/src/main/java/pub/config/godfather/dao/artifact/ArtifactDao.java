@@ -3,6 +3,7 @@ package pub.config.godfather.dao.artifact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pub.config.godfather.dao.BasicDao;
+import pub.config.godfather.dao.UuidHelper;
 import pub.config.godfather.model.Artifact;
 import pub.config.godfather.model.User;
 
@@ -40,8 +41,8 @@ public class ArtifactDao extends BasicDao<Artifact, ArtifactSqlInventory>
     {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", artifact.getName());
-        parameters.put("creator", creator.getId().toString());
-        parameters.put("organization", creator.getOrganization().toString());
+        parameters.put("creator", UuidHelper.getValue(creator.getId()));
+        parameters.put("organization", UuidHelper.getValue(creator.getOrganization()));
         return super.create(parameters);
     }
 }

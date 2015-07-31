@@ -3,6 +3,7 @@ package pub.config.godfather.dao.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pub.config.godfather.dao.BasicDao;
+import pub.config.godfather.dao.UuidHelper;
 import pub.config.godfather.model.User;
 
 import javax.sql.DataSource;
@@ -38,7 +39,7 @@ public class UserDao extends BasicDao<User, UserSqlInventory>
         params.put("first_name", entity.getFirstName());
         params.put("last_name", entity.getLastName());
         params.put("email", entity.getEmail());
-        params.put("organization", creator.getOrganization().toString());
+        params.put("organization", UuidHelper.getValue(creator.getOrganization()));
         return super.create(params);
     }
 }

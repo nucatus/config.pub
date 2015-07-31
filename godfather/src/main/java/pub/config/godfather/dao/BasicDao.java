@@ -6,10 +6,7 @@ import pub.config.godfather.model.RootModel;
 import pub.config.godfather.model.User;
 
 import javax.sql.DataSource;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author alexandru.ionita
@@ -28,12 +25,8 @@ public abstract class BasicDao<T extends RootModel, K extends CrudSqlInventory>
 
     public T getById(final UUID id)
     {
-        if (id == null)
-        {
-            throw new IllegalArgumentException("ID cannot be null");
-        }
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("id", id.toString());
+        parameters.put("id", UuidHelper.getValue(id));
         T found = jdbcTemplate.queryForObject(
                 crudSql.GET_BY_ID(),
                 parameters, defaultRowMapper);
@@ -43,7 +36,7 @@ public abstract class BasicDao<T extends RootModel, K extends CrudSqlInventory>
     protected T create(final Map<String, Object> sqlParams)
     {
         UUID generatedId = nextSeq();
-        sqlParams.put("id", generatedId.toString());
+        sqlParams.put("id", UuidHelper.getValue(generatedId));
         jdbcTemplate.update(crudSql.CREATE(), sqlParams);
         return getById(generatedId);
     }
@@ -61,12 +54,8 @@ public abstract class BasicDao<T extends RootModel, K extends CrudSqlInventory>
 
     public boolean deleteById(final UUID id)
     {
-        if (id == null)
-        {
-            throw new IllegalArgumentException("ID cannot be null");
-        }
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("id", id.toString());
+        parameters.put("id", UuidHelper.getValue(id));
         int rowsCount = jdbcTemplate.update(
                 crudSql.DELETE(),
                 parameters);
@@ -86,7 +75,7 @@ public abstract class BasicDao<T extends RootModel, K extends CrudSqlInventory>
     public Collection<T> getAll(UUID organizationId)
     {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("organization", organizationId.toString());
+        parameters.put("organization", UuidHelper.getValue(organizationId));
         return jdbcTemplate.query(
                 crudSql.GET_ALL(), parameters, defaultRowMapper);
     }
