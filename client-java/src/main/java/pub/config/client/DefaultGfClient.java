@@ -133,7 +133,7 @@ public class DefaultGfClient implements GfClient
 
     public Collection<Artifact> getArtifacts() throws GfException, IOException
     {
-        final WebTarget resource = resource().path("info");
+        final WebTarget resource = resource().path("api/artifacts");
         Listing<Artifact> listing = requestListing(GET,
                         ARTIFACT_LISTING_GENERIC_TYPE,
                         resource,
