@@ -24,9 +24,37 @@ public class ClientCertificates
     public static final String DEFAULT_CLIENT_CERT_FILE = "cert.pem";
     public static final String DEFAULT_CLIENT_KEY_FILE = "key.pem";
 
-    private static final char[] LOCAL_KEY_STORE_PASSWORD = "leaveItHere@12PM".toCharArray();
+    private static final char[] LOCAL_KEY_STORE_PASSWORD = "changeit".toCharArray();
 
     private final SSLContext sslContext;
+
+    public ClientCertificates() throws ClientCertificatesException
+    {
+        try
+        {
+            KeyStore trustStore = KeyStore.getInstance("JKS");
+            trustStore.load(this.getClass().getClassLoader().getResourceAsStream("ca.truststore.jks"),null);
+
+            KeyStore keyStore = KeyStore.getInstance("JKS");
+            keyStore.load(this.getClass().getClassLoader().getResourceAsStream("client.keystore.jks"), "changeit".toCharArray());
+
+            this.sslContext = SSLContexts.custom()
+                    .loadTrustMaterial(trustStore, null)
+                    .loadKeyMaterial(keyStore, LOCAL_KEY_STORE_PASSWORD)
+                    .useProtocol("TLS")
+                    .build();
+        } catch (KeyStoreException |
+                CertificateException |
+                NoSuchAlgorithmException |
+                IOException |
+                UnrecoverableKeyException |
+                KeyManagementException e)
+        {
+            throw new ClientCertificatesException(e);
+        }
+
+
+    }
 
     public ClientCertificates(final Path clientCertsPath) throws ClientCertificatesException
     {
