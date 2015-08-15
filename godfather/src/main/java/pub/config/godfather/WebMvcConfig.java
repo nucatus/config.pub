@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 /**
  * @author alexandru.ionita
@@ -24,5 +25,11 @@ public class WebMvcConfig extends WebMvcAutoConfiguration.EnableWebMvcConfigurat
                 defaultContentType(MediaType.APPLICATION_JSON).
                 mediaType("text", MediaType.TEXT_PLAIN).
                 mediaType("json", MediaType.APPLICATION_JSON);
+    }
+
+    @Override
+    protected void addViewControllers(ViewControllerRegistry registry)
+    {
+        registry.addViewController("/login").setViewName("login");
     }
 }
